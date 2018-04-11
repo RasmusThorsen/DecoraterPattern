@@ -21,12 +21,12 @@ namespace DecoraterPattern
 
             IDrink drink = new BasicDrink();
 
-            var input = new ConsoleKeyInfo();
-            while (input.KeyChar != '0')
+            var key = new ConsoleKeyInfo();
+            while (key.KeyChar != '0')
             {
-                input = Console.ReadKey();
+                key = Console.ReadKey();
                 Console.WriteLine();
-                switch (input.KeyChar)
+                switch (key.KeyChar)
                 {
                     case '1':
                         Console.WriteLine("Tilføjer vodka");
@@ -55,7 +55,7 @@ namespace DecoraterPattern
                     case '0':
                         Console.WriteLine(drink.getIngredients() + " med procenten " + drink.getAlcoholPercent());
                         break;
-                    default: 
+                    default:
                         Console.WriteLine("Indtast et tal mellem 0-6");
                         break;
                 }
