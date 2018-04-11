@@ -10,81 +10,56 @@ namespace DecoraterPattern
     {
         static void Main(string[] args)
         {
-            var drink = new DrinkWithGin(new DrinkWithTonic(new BasicDrink()));
+            Console.WriteLine("Vælg ingredienser vha. tal på tastaturet \n" +
+                              "1. Vodka \n" +
+                              "2. Rom \n" +
+                              "3. Gin \n" +
+                              "4. Juice \n" +
+                              "5. Cola \n" +
+                              "6. Tonic \n" +
+                              "0. Afslut \n");
 
-            Console.WriteLine(drink.getIngredients());
-            Console.WriteLine(drink.getAlcoholPercent());
-        }
-    }
+            IDrink drink = new BasicDrink();
 
-    public interface IDrink
-    {
-        string getIngredients();
-        double getAlcoholPercent();
-    }
-
-    public class BasicDrink : IDrink
-    {
-        public string getIngredients()
-        {
-            return "Du har valgt følgende: ";
-        }
-
-        public double getAlcoholPercent()
-        {
-            return 0;
-        }
-    }
-
-    public abstract class DrinkDecorater : IDrink
-    {
-        private readonly IDrink decoratedDrink;
-
-        protected DrinkDecorater(IDrink drink)
-        {
-            decoratedDrink = drink;
-        }
-
-        public virtual string getIngredients()
-        {
-            return decoratedDrink.getIngredients();
-        }
-
-        public virtual double getAlcoholPercent()
-        {
-            return decoratedDrink.getAlcoholPercent();
-        }
-    }
-
-    public class DrinkWithGin : DrinkDecorater
-    {
-        public DrinkWithGin(IDrink decorater) : base(decorater)
-        {}
-
-        public override string getIngredients()
-        {
-            return base.getIngredients() + " Gin, ";
-        }
-
-        public override double getAlcoholPercent()
-        {
-            return base.getAlcoholPercent() + 40;
-        }
-    }
-
-    public class DrinkWithTonic : DrinkDecorater
-    {
-        public DrinkWithTonic(IDrink decorater) : base(decorater)
-        {}
-
-        public override string getIngredients()
-        {
-            return base.getIngredients() + " Tonic, ";
-        }
-
-        public override double getAlcoholPercent()
-        {
-            return base.getAlcoholPercent() - 20;
+            var input = new ConsoleKeyInfo();
+            while (input.KeyChar != '0')
+            {
+                input = Console.ReadKey();
+                Console.WriteLine();
+                switch (input.KeyChar)
+                {
+                    case '1':
+                        Console.WriteLine("Tilføjer vodka");
+                        drink = new DrinkWithVodka(drink);
+                        break;
+                    case '2':
+                        Console.WriteLine("Tilføjer Rom");
+                        drink = new DrinkWithRom(drink);
+                        break;
+                    case '3':
+                        Console.WriteLine("Tilføjer Gin");
+                        drink = new DrinkWithGin(drink);
+                        break;
+                    case '4':
+                        Console.WriteLine("Tilføjer Juice");
+                        drink = new DrinkWithJuice(drink);
+                        break;
+                    case '5':
+                        Console.WriteLine("Tilføjer Cola");
+                        drink = new DrinkWithCola(drink);
+                        break;
+                    case '6':
+                        Console.WriteLine("Tilføjer Tonic");
+                        drink = new DrinkWithTonic(drink);
+                        break;
+                    case '0':
+                        Console.WriteLine(drink.getIngredients() + " med procenten " + drink.getAlcoholPercent());
+                        break;
+                    default: 
+                        Console.WriteLine("Indtast et tal mellem 0-6");
+                        break;
+                }
+            }
         }
     }
 
